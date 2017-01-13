@@ -1,0 +1,89 @@
+<html ng-app="ContactsApp">
+    <head>
+        <title>Contacts App</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src = "angular.js"></script>
+        <script src = "app.js"></script>
+        <script src = "contact.config.service.js"></script>
+        <script src = "contact.controller.js"></script>
+        <script src = "contactname.js"></script>
+        <script src = "contactdata.service.js"></script>
+    </head>
+
+    <body>
+        
+        <div ng-controller="HeaderCntrlr as head">
+            <h1> {{head.appHeader}}</h1>
+        </div>
+
+        <div ng-controller="ContactCntrlr as cntrl">
+            <div class = "row">
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="contact in cntrl.contacts" ng-click="cntrl.selectContact($index)">
+                    <span> {{ contact.name.first + " " + contact.name.last}}</span>
+                    </li>
+                </ul>
+                <button ng-click = "cntrl.addContact()">Add Contact</button>
+           </div>
+
+           <div class = "col-md-6">
+               <div class = "alert alert-success" ng-if = "cntrl.successMsg">{{cntrl.successMsg}}</div>
+               <div class = "alert alert-danger" ng-if = "cntrl.errorMsg">{{cntrl.errorMsg}}</div>
+               <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img ng-src="{{cntrl.selectedContact.picture.medium}}"/>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <button ng-hide = "cntrl.editMode" ng-click="cntrl.toggleEdit()">Edit</button>
+                        <button ng-show="cntrl.editMode" ng-click="cntrl.Save()">Save</button>
+                        <p>
+                            <span>First Name :</span>
+                            <span ng-hide = "cntrl.editMode">{{cntrl.selectedContact.name.first}}</span>
+                            <input type="text" ng-show="cntrl.editMode" ng-model="cntrl.selectedContact.name.first"></input>
+                        </p>
+                        <p>
+                            <span>Last name :</span>
+                            <span ng-hide = "cntrl.editMode">{{cntrl.selectedContact.name.last}}</span>
+                            <input type="text" ng-show="cntrl.editMode" ng-model="cntrl.selectedContact.name.last"></input>
+                        </p>
+                        
+                        <div>
+                            <p>
+                                <h5>Location</h5>
+                            </p>
+                            <p>
+                                <span>Street : </span>
+                                <span ng-hide = "cntrl.editMode">{{cntrl.selectedContact.location.street }}</span>
+                                <input type="text" ng-show="cntrl.editMode" ng-model="cntrl.selectedContact.location.street"></input>
+                            </p>
+                            <p>
+                                <span>City :</span>
+                                <span ng-hide = "cntrl.editMode">{{cntrl.selectedContact.location.city}}</span>
+                                <input type="text" ng-show="cntrl.editMode" ng-model="cntrl.selectedContact.location.city"></input>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p>
+                                <span>Phone :</span>
+                                <span ng-hide = "cntrl.editMode">{{cntrl.selectedContact.phone}}</span>
+                                <input type="text" ng-show="cntrl.editMode" ng-model="cntrl.selectedContact.phone"></input>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+        </div>
+
+        <div ng-controller="FooterCntrlr as footer">
+            <h1>{{footer.appFooter}}</h1>
+            <h5>{{footer.date}}</h5>
+        </div>
+
+    </body>
+</html>
